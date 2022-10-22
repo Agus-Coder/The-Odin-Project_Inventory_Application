@@ -15,25 +15,29 @@ exports.index = (req, res) => {
 
 exports.instrument_create_get = (req, res, next) => {
   // get artist and genres for filling our instruments
-  // async.parallel(
-  //   {
-  //     artists(callback) {
-  //       Artist.find(callback);
-  //     },
-  //     genres(callback) {
-  //       Genre.find(callback);
-  //     },
-  //   },
-  //   (err, results) => {
-  //     if (err) {
-  //       return next(err);
-  //     }
-  //     res.render("instrument_form", {
-  //       title: "Create new Instrument",
-  //       artists: results.artists,
-  //       genres: results.genres,
-  //     });
-  //   }
-  // );
-  res.send("NOT IMPLEMENTED: BookInstance update GET");
+  async.parallel(
+    {
+      artists(callback) {
+        Artist.find(callback);
+      },
+      genres(callback) {
+        Genre.find(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      res.render("instrument_form", {
+        title: "Create new Instrument",
+        artists: results.artists,
+        genres: results.genres,
+      });
+    }
+  );
+  // res.send("NOT IMPLEMENTED: BookInstance update GET");
 };
+
+exports.instrument_create_post = (req, res, next) => {
+  //create new artist with post
+}
