@@ -1,5 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const Genre = require("../models/genre");
+const async = require("async")
 
 // Remember, in here we need to implement controllers for every url we create in in our routes files
 // Instrument refers artists and genres, so, you can delete inst, but NOT artist or genres, its deletion would cause
@@ -10,14 +11,11 @@ exports.genre_create_get = (req, res, next) => {
   res.render("genre_form", {
     title: "Create new Genre",
   });
-}; 
+};
 
 exports.genre_create_post = [
   // Validate and sanitize the name field.
-  body("name", "Genre name required")
-  .trim()
-  .isLength({ min: 1 })
-  .escape(),
+  body("name", "Genre name required").trim().isLength({ min: 1 }).escape(),
 
   // Process request after validation and sanitization.
   (req, res, next) => {
@@ -52,10 +50,101 @@ exports.genre_create_post = [
               return next(err);
             }
             // Genre saved. Redirect to genre detail page.
-            // res.redirect();
+            res.redirect('back');
           });
         }
       });
     }
   },
 ];
+
+exports.genre_list = (req, res, next) => {
+  Genre.find()
+    .sort([["name", "ascending"]])
+    .exec(function (err, list_genre) {
+      if (err) {
+        return next(err);
+      }
+      //succes! Then, render:
+      res.render("genre_list", {
+        title: "Genre List",
+        genre_list: list_genre,
+      });
+    });
+};
+
+exports.genre_detail = (req, res, next) => {
+  async.parallel(
+    {
+      genre(callback) {
+        Genre.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.genre == null) {
+        // No results.
+        const err = new Error("Genre not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render
+      res.render("genre_detail", {
+        title: "Genre Detail",
+        genre: results.genre,
+      });
+    }
+  );
+};
+
+exports.genre_delete_post = (req, res) => {
+  async.parallel(
+    {
+      genre(callback) {
+        Genre.findById(req.body.genreid).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      // Success
+      
+      Genre.findByIdAndRemove(req.body.genreid, (err) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect("back");
+      });
+    }
+  );
+};
+
+
+
+exports.genre_delete_get = (req, res, next) => {
+  async.parallel(
+    {
+      genre(callback) {
+        Genre.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.genre == null) {
+        // No results.
+        res.redirect("/inventory/genre/create");
+      }
+      // Successful, so render.
+      res.render("genre_delete", {
+        title: "Delete genre",
+        genre: results.genre,
+      });
+    }
+  );
+};

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='../public/stylesheets/style.css' />
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+    <p>Welcome to <%= genre.name %>
+    </p>
+
+    <form method="POST" action="">
+        <input type="hidden" , name="genreid" , required="true" , value='<%= genre._id %>'>
+        <button type="submit">Delete</button>
+    </form>
+
+    <a href="./list">go back to gender list</a>
+
+</body>
+
+</html>

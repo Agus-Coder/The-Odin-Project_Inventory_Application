@@ -33,4 +33,18 @@ router.get("/genre/create", genre_controller.genre_create_get);
 // POST request for creating a new instrument
 router.post("/genre/create", genre_controller.genre_create_post);
 
+// GET request for viewing a list of created genres
+router.get("/genre/list", genre_controller.genre_list);
+
+// GET any genre detail
+router.get("/genre/:id", genre_controller.genre_detail);
+
+
+// POST delete genre from the list
+router.post("/genre/:id/delete", genre_controller.genre_delete_post);
+
+router.get("/genre/:id/delete", genre_controller.genre_delete_get);
+
+
+
 module.exports = router;

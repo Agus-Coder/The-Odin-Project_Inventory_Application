@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='../public/stylesheets/style.css' />
+</head>
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+    <p>Welcome to <%= title %>
+    </p>
+
+    <ul>
+        <% genre_list.forEach(function(genre) { %>
+            <li> Genre: <a href='<%= genre.url %>'>
+                    <%= genre.name %>
+                </a>
+            </li>
+            <% }); %>
+    </ul>
+    <a href="./create">go back to creation</a>
+
+</body>
+
+</html>
