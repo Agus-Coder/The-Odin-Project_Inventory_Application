@@ -34,11 +34,44 @@ exports.artist_create_post = (req, res, next) => {
 }
 
 exports.artist_list = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Artist list");
+  Artist.find()
+    .sort([["name", "ascending"]])
+    .exec(function (err, list_artists) {
+      if (err) {
+        return next(err);
+      }
+      //Successful, so render
+      res.render("artist_list", {
+        title: "Artist List",
+        artist_list: list_artists,
+      });
+    });
 }
 
 exports.artist_detail = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Artist Detail");
+  async.parallel(
+    {
+      artist(callback) {
+        Artist.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.artist == null) {
+        // No results.
+        const err = new Error("artist not found");
+        err.status = 404;
+        return next(err);
+      }
+      // Successful, so render
+      res.render("artist_detail", {
+        title: "artist Detail",
+        artist: results.artist,
+      });
+    }
+  );
 }
 
 exports.artist_delete_get = (req, res, next) => {

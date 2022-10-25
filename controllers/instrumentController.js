@@ -41,3 +41,18 @@ exports.instrument_create_get = (req, res, next) => {
 exports.instrument_create_post = (req, res, next) => {
   //create new artist with post
 }
+
+exports.instrument_list = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: instrument list");
+}
+
+exports.instrument_detail = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: instrument Detail");
+}
+
+exports.instrument_delete_get = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: instrument Delete Get");
+}
+exports.instrument_delete_post = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: instrument Delete post");
+}

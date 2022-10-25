@@ -9,4 +9,8 @@ const ArtistSchema = new Schema({
     band: { type: String },
 })
 
+ArtistSchema.virtual("url").get(function () {
+    return `/inventory/artist/${this._id}`;
+  });
+
 module.exports = mongoose.model("Artist", ArtistSchema)
