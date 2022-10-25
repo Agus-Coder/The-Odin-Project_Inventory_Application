@@ -123,8 +123,6 @@ exports.genre_delete_post = (req, res) => {
   );
 };
 
-
-
 exports.genre_delete_get = (req, res, next) => {
   async.parallel(
     {

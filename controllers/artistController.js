@@ -30,5 +30,20 @@ exports.artist_create_get = (req, res, next) => {
 };
 
 exports.artist_create_post = (req, res, next) => {
-  //create new artist with post
+  res.send("NOT IMPLEMENTED: Artist Create Post");
+}
+
+exports.artist_list = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Artist list");
+}
+
+exports.artist_detail = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Artist Detail");
+}
+
+exports.artist_delete_get = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Artist Delete Get");
+}
+exports.artist_delete_post = (req, res, next) => {
+  res.send("NOT IMPLEMENTED: Artist Delete post");
 }
