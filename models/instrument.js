@@ -7,7 +7,7 @@ const InstrumentSchema = new Schema({
   brand: { type: String },
   artist: { type: Schema.Types.ObjectId, ref: "Artist", required: false },
   model: { type: String },
-  price: { type: Number}
+  // price: { type: Number}
 });
 
 InstrumentSchema.virtual("url").get(function(){ //You can't use arrow function in here because of the 'this'

@@ -1,6 +1,6 @@
 const { body, validationResult } = require("express-validator");
 const Genre = require("../models/genre");
-const async = require("async")
+const async = require("async");
 
 // Remember, in here we need to implement controllers for every url we create in in our routes files
 // Instrument refers artists and genres, so, you can delete inst, but NOT artist or genres, its deletion would cause
@@ -50,7 +50,7 @@ exports.genre_create_post = [
               return next(err);
             }
             // Genre saved. Redirect to genre detail page.
-            res.redirect('back');
+            res.redirect("back");
           });
         }
       });
@@ -99,30 +99,6 @@ exports.genre_detail = (req, res, next) => {
   );
 };
 
-exports.genre_delete_post = (req, res) => {
-  async.parallel(
-    {
-      genre(callback) {
-        Genre.findById(req.body.genreid).exec(callback);
-      },
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      // Success
-      
-      Genre.findByIdAndRemove(req.body.genreid, (err) => {
-        if (err) {
-          return next(err);
-        }
-
-        res.redirect("back");
-      });
-    }
-  );
-};
-
 exports.genre_delete_get = (req, res, next) => {
   async.parallel(
     {
@@ -142,6 +118,30 @@ exports.genre_delete_get = (req, res, next) => {
       res.render("genre_delete", {
         title: "Delete genre",
         genre: results.genre,
+      });
+    }
+  );
+};
+
+exports.genre_delete_post = (req, res) => {
+  async.parallel(
+    {
+      genre(callback) {
+        Genre.findById(req.body.genreid).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      // Success
+
+      Genre.findByIdAndRemove(req.body.genreid, (err) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect("back");
       });
     }
   );
