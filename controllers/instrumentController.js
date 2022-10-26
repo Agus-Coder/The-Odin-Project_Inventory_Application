@@ -153,8 +153,51 @@ exports.instrument_detail = (req, res, next) => {
 }
 
 exports.instrument_delete_get = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: instrument Delete Get");
+  async.parallel(
+    {
+      instrument(callback) {
+        Instrument.findById(req.params.id).exec(callback);
+      },
+      instruments_artists(callback) {
+        Artist.find({ instrument: req.params.id }).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      if (results.instrument == null) {
+        // No results.
+        res.redirect("/inventory/instrument");
+      }
+      // Successful, so render.
+      res.render("instrument_delete", {
+        title: "Delete Instrument",
+        instrument: results.instrument,
+      });
+    }
+  );
 }
+
 exports.instrument_delete_post = (req, res, next) => {
-  res.send("NOT IMPLEMENTED: instrument Delete post");
+  async.parallel(
+    {
+      instrument(callback) {
+        Instrument.findById(req.params.id).exec(callback);
+      },
+    },
+    (err, results) => {
+      if (err) {
+        return next(err);
+      }
+      // Nook has no instances. Delete object and redirect to the list of books.
+      Instrument.findByIdAndRemove(req.body.instrumentid, (err) => {
+        if (err) {
+          return next(err);
+        }
+        // Success - go to author list
+        res.redirect("/inventory/intrument");
+      });
+    }
+  );
 }
