@@ -39,6 +39,16 @@ exports.instrument_create_get = (req, res, next) => {
 };
 
 exports.instrument_create_post = [
+  // Convert the artist to an array.
+  (req, res, next) => {
+    if (!Array.isArray(req.body.artist)) {
+      req.body.artist =
+        typeof req.body.artist === "undefined" ? [] : [req.body.artist];
+    }
+    next();
+  },
+
+
     // Validate and sanitize fields.
   body("class", "Class must not be empty.")
     .trim()
