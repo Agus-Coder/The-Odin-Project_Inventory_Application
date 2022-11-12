@@ -66,10 +66,11 @@ exports.genre_list = (req, res, next) => {
         return next(err);
       }
       //succes! Then, render:
-      res.render("genre_list", {
-        title: "Genre List",
-        genre_list: list_genre,
-      });
+      res.json(list_genre)
+      // res.render("genre_list", {
+      //   title: "Genre List",
+      //   genre_list: list_genre,
+      // });
     });
 };
 
