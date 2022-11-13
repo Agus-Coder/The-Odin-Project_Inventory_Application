@@ -6,6 +6,8 @@ const async = require("async");
 // Instrument refers artists and genres, so, you can delete inst, but NOT artist or genres, its deletion would cause
 // an empty data space for instrument
 
+// REMEMBER TO INSTALL NODEMON OR TO RESTART TE SERVER IN EVERY CHANGE!!
+
 exports.genre_create_get = (req, res, next) => {
   // get artist and genres for filling our instruments
   res.render("genre_form", {
@@ -17,10 +19,13 @@ exports.genre_create_post = [
   // Validate and sanitize the name field.
   body("name", "Genre name required").trim().isLength({ min: 1 }).escape(),
 
+
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
+
+    console.log(req.body)
 
     // Create a genre object with escaped and trimmed data.
     const genre = new Genre({ name: req.body.name });
