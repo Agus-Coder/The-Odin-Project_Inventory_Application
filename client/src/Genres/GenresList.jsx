@@ -1,19 +1,18 @@
 function GenresList({ el }) {
 
-
-  function handleDelete() {
+  const handleDelete = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/inventory/genre/create", {
-      method: "DELETE",
-      mode: "cors",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    });
-    console.log(data);
-  }
+    const response = await fetch(
+      "http://localhost:3000/inventory/genre/" + el._id + "/delete",
+      {
+        method: "DELETE",
+        mode: "cors",
+      }
+    );
+    // const json = await response.json() // here it is saved the document that we just deleted
+    console.log(el._id)
+  };
 
   return (
     <div

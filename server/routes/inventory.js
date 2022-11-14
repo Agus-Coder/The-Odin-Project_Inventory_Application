@@ -68,7 +68,7 @@ router.get("/genre/:id", genre_controller.genre_detail);
 router.get("/genre/:id/delete", genre_controller.genre_delete_get);
 
 // POST delete genre from the list
-router.post("/genre/:id/delete", genre_controller.genre_delete_post);
+router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 
 
 

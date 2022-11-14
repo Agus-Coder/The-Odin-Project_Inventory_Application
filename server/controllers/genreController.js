@@ -19,13 +19,12 @@ exports.genre_create_post = [
   // Validate and sanitize the name field.
   body("name", "Genre name required").trim().isLength({ min: 1 }).escape(),
 
-
   // Process request after validation and sanitization.
   (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    console.log(req.body)
+    console.log(req.body);
 
     // Create a genre object with escaped and trimmed data.
     const genre = new Genre({ name: req.body.name });
@@ -71,7 +70,7 @@ exports.genre_list = (req, res, next) => {
         return next(err);
       }
       //succes! Then, render:
-      res.json(list_genre)
+      res.json(list_genre);
       // res.render("genre_list", {
       //   title: "Genre List",
       //   genre_list: list_genre,
@@ -130,25 +129,24 @@ exports.genre_delete_get = (req, res, next) => {
 };
 
 exports.genre_delete_post = (req, res) => {
-  async.parallel(
-    {
-      genre(callback) {
-        Genre.findById(req.body.genreid).exec(callback);
-      },
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      // Success
-
-      Genre.findByIdAndRemove(req.body.genreid, (err) => {
-        if (err) {
-          return next(err);
-        }
-
-        res.redirect("back");
-      });
+  Genre.findByIdAndRemove(req.params.id, (err, x) => {
+    if (err) {
+      return next(err);
     }
-  );
+
+    res.send(console.log("working"));
+    res.send(console.log(x));
+    res.send(console.log(req.params.id));
+    // res.redirect("back")
+  });
+
+  // res.send(console.log('working'))
+  /* Observacion: NO ES LO MISMO!!! Enviar un req.body que enviar
+  un req.params. Esto no estaba funcionando porque en findByIdAndRemove
+  se estaba pasando req.body.id como parametro. En este momento esta funcionando
+  porque se utiliza req.params.id cuidado con esto
+*/
+
+/* Por otro lado, esto estaba funcionando con un metodo POST y no un metodo DELETE
+Pero, tanto en el archivo */
 };
