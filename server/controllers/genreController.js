@@ -137,7 +137,6 @@ exports.genre_delete_post = (req, res) => {
     res.send(console.log("working"));
     res.send(console.log(x));
     res.send(console.log(req.params.id));
-    // res.redirect("back")
   });
 
   // res.send(console.log('working'))
