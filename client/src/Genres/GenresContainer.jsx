@@ -11,8 +11,8 @@ function GenresContainer() {
   }, []);
 
   return (
-    <div className="container-fluid bg-dark text-light">
-      <div className="row">
+    <div className="col-8 bg-dark text-light">
+      <div className="row justify-content-md-center">
         {info.map((el) => (
           <GenresList el={el} />
         ))}

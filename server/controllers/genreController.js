@@ -27,8 +27,10 @@ exports.genre_create_post = [
     console.log(req.body);
 
     // Create a genre object with escaped and trimmed data.
-    const genre = new Genre({ name: req.body.name });
-
+    const genre = new Genre({
+      name: req.body.name,
+      dataClass: "Genre",
+    });
     if (!errors.isEmpty()) {
       // There are errors. Render the form again with sanitized values/error messages.
       res.render("genre_form", {
@@ -146,6 +148,6 @@ exports.genre_delete_post = (req, res) => {
   porque se utiliza req.params.id cuidado con esto
 */
 
-/* Por otro lado, esto estaba funcionando con un metodo POST y no un metodo DELETE
+  /* Por otro lado, esto estaba funcionando con un metodo POST y no un metodo DELETE
 Pero, tanto en el archivo */
 };

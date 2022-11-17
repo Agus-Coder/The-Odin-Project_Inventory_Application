@@ -7,6 +7,7 @@ const InstrumentSchema = new Schema({
   brand: { type: String },
   artist: { type: Schema.Types.ObjectId, ref: "Artist", required: false },
   model: { type: String },
+  dataClass: {type: String},
   // price: { type: Number}
 });
 

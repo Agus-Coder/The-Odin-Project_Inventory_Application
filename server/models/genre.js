@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const GenreSchema = new Schema({
   name: { type: String },
+  dataClass: {type: String},
 });
 
 GenreSchema.virtual("url").get(function () {

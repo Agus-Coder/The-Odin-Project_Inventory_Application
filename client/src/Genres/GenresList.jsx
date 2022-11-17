@@ -3,7 +3,7 @@ import DeleteGenreButton from "./DeleteGenreButton";
 function GenresList({ el }) {
   return (
     <div
-      className="card col-2 bg-dark text-light border border-light"
+      className="card col-3 bg-dark text-light border border-light"
       key={`${el._id}`}
     >
       <div className="card-body">
