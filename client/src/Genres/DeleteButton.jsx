@@ -1,10 +1,14 @@
-const DeleteGenreButton = ({ el }) => {
-  const handleDelete = () => {
-    fetch("http://localhost:3000/inventory/genre/" + el._id + "/delete", {
+const DeleteButton = ({ el }) => {
+  const handleDelete = (e) => {
+
+    e.preventDefault()
+
+    fetch("http://localhost:3000/inventory/"+ el.dataClass +"/" + el._id + "/delete", {
       method: "DELETE",
     });
     // const json = await response.json() // here it is saved the document that we just deleted
     console.log(el._id);
+    console.log(el.dataClass);
   };
 
   return (
@@ -14,4 +18,4 @@ const DeleteGenreButton = ({ el }) => {
   );
 };
 
-export default DeleteGenreButton;
+export default DeleteButton;

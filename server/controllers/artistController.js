@@ -41,11 +41,11 @@ exports.artist_create_post = [
     .isLength({ min: 2 })
     .escape()
     .withMessage("Age must be specified."),
-  body("style")
-    .optional({ checkFalsy: true })
-    .trim()
-    .isLength({ min: 2 })
-    .escape(),
+  // body("style")
+  //   .optional({ checkFalsy: true })
+  //   .trim()
+  //   .isLength({ min: 2 })
+  //   .escape(),
   body("band")
     .optional({ checkFalsy: true })
     .trim()
@@ -58,11 +58,7 @@ exports.artist_create_post = [
 
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/errors messages.
-      res.render("artist_form", {
-        title: "Create artist",
-        artist: req.body,
-        errors: errors.array(),
-      });
+      res.send("Error");
       return;
     }
     // Data from form is valid.
@@ -71,16 +67,18 @@ exports.artist_create_post = [
     const artist = new Artist({
       name: req.body.name,
       age: req.body.age,
-      style: req.body.style,
+      // style: req.body.style,
       band: req.body.band,
+      dataClass: 'artist',
     });
     artist.save((err) => {
       if (err) {
         return next(err);
       }
       // Successful - redirect to new author record.
-      res.redirect(artist.url);
-    });
+      // res.redirect(artist.url);
+    })
+    console.log("Artist Created");
   },
 ];
 
@@ -92,10 +90,7 @@ exports.artist_list = (req, res, next) => {
         return next(err);
       }
       //Successful, so render
-      res.render("artist_list", {
-        title: "Artist List",
-        artist_list: list_artists,
-      });
+      res.json(list_artists);
     });
 }
 
@@ -150,25 +145,16 @@ exports.artist_delete_get = (req, res, next) => {
 }
 
 exports.artist_delete_post = (req, res, next) => {
-  async.parallel(
-    {
-      artist(callback) {
-        Artist.findById(req.body.artistid).exec(callback);
-      },
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      // Success
 
-      Artist.findByIdAndRemove(req.body.artistid, (err) => {
-        if (err) {
-          return next(err);
-        }
-
-        res.redirect("back");
-      });
+  Artist.findByIdAndRemove(req.params.id, (err, x) => {
+    if (err) {
+      return next(err);
     }
-  );
+
+    res.send(console.log("working"));
+    res.send(console.log(x));
+    res.send(console.log(req.params.id));
+  });
+
+
 }

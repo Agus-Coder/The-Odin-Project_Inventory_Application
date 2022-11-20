@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const ArtistSchema = new Schema({
   name: { type: String },
   age: { type: Number },
-  style: { type: String },
+  // style: { type: String },
   band: { type: String },
   dataClass: { type: String },
 });

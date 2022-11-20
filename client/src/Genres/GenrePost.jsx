@@ -1,12 +1,27 @@
+import { useContext, useEffect } from "react";
 import { useState } from "react";
+import { genreObjeto, artistObjeto } from "../Context/Context";
+import FormTest from "./formTest";
 
 const GenrePost = () => {
-  const [categoryState, setCategoryState] = useState('')
-  const [name, setName] = useState("");
-  const data = { name };
+  const [categoryState, setCategoryState] = useState("artist");
+  const artist = useContext(artistObjeto);
+  const genre = useContext(genreObjeto);
+
+  console.log(categoryState);
 
   function handlePost(e) {
-    // e.preventDefault();
+    e.preventDefault();
+
+    let data;
+
+    if (categoryState == "artist") {
+      data = artist;
+      console.log(data);
+    } else if (categoryState == "genre") {
+      data = genre;
+      console.log(data);
+    }
 
     fetch(`http://localhost:3000/inventory/${categoryState}/create`, {
       method: "POST",
@@ -23,28 +38,25 @@ const GenrePost = () => {
     <>
       <div className="col-3 bg-info bg-opacity-50 row m-0 p-0">
         <div className="col-2"></div>
-        <form onSubmit={() => {handlePost(); console.log(categoryState)} } className="col-8">
+        <form onSubmit={handlePost} className="col-8"> 
+        {/* With onSubmit={() => handlePost()} wont work*/}
           <div className="form-group">
-            <label htmlFor="name">Genre Name</label>
-            <input
-              type="text"
-              value={name}
-              placeholder="Name"
-              className="form-control col-4"
-              id="name"
-              onChange={(e) => setName(e.target.value)}
-            />
-            <div className="form-group">
-              <label htmlFor="exampleFormControlSelect1">Category Select</label>
-              <select className="form-control" value={categoryState} onChange={(e) => {setCategoryState(e.target.value); console.log(e.target.value, categoryState)}}>
-                <option value='Artist'>Artist</option>
-                <option value='Genre'>Genre</option>
-                <option value='Instrument'>Instrument</option>
-              </select>
-            </div>
-            <small id="emailHelp" className="form-text text-muted">
-              Be sure to set the proper name
-            </small>
+            <label htmlFor="exampleFormControlSelect1">Category Select</label>
+            <select
+              className="form-control"
+              value={categoryState}
+              onChange={(e) => {
+                setCategoryState(e.target.value);
+              }}
+            >
+              <option value="artist">Artist</option>
+              <option value="genre">Genre</option>
+              <option value="instrument">Instrument</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <FormTest itemCategory={categoryState} />
           </div>
           <button type="submit" className="btn btn-light">
             Create

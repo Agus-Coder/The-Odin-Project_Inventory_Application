@@ -1,4 +1,4 @@
-import DeleteGenreButton from "./DeleteGenreButton";
+import DeleteButton from "./DeleteButton";
 
 function GenresList({ el }) {
   return (
@@ -9,7 +9,7 @@ function GenresList({ el }) {
       <div className="card-body">
         <h5 className="card-title">{el.name}</h5>
         <p className="card-text">Info about {el.name}</p>
-        <DeleteGenreButton el={el} />
+        <DeleteButton el={el} />
       </div>
     </div>
   );
