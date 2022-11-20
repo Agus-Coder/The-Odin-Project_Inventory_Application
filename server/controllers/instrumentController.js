@@ -39,18 +39,8 @@ exports.instrument_create_get = (req, res, next) => {
 };
 
 exports.instrument_create_post = [
-  // Convert the artist to an array.
-  (req, res, next) => {
-    if (!Array.isArray(req.body.artist)) {
-      req.body.artist =
-        typeof req.body.artist === "undefined" ? [] : [req.body.artist];
-    }
-    next();
-  },
-
-
-    // Validate and sanitize fields.
-  body("class", "Class must not be empty.")
+  // Validate and sanitize fields.
+  body("category", "Category must not be empty.")
     .trim()
     .isLength({ min: 1 })
     .escape(),
@@ -58,10 +48,10 @@ exports.instrument_create_post = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("artist", "Artist must not be empty.")
-    .trim()
-    .isLength({ min: 1 })
-    .escape(),
+  // body("artist", "Artist must not be empty.")
+  //   .trim()
+  //   .isLength({ min: 1 })
+  //   .escape(),
   body("model", "Model must not be empty.")
     .trim()
     .isLength({ min: 1 })
@@ -71,40 +61,20 @@ exports.instrument_create_post = [
     // Extract the validation errors from a request.
     const errors = validationResult(req);
 
-    // Create a Book object with escaped and trimmed data.
-    const instrument = new Instrument({
-      class: req.body.class,
-      brand: req.body.brand,
-      artist: req.body.artist,
-      model: req.body.model,
-      // price: req.body.price,
-    });
-
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
-
-      // Get all authors and genres for form.
-      async.parallel(
-        {
-          artists(callback) {
-            Artist.find(callback);
-          },
-        },
-        (err, results) => {
-          if (err) {
-            return next(err);
-          }
-
-          res.render("instrument_form", {
-            title: "Create Instrument",
-            artists: results.artists,
-            instrument,
-            errors: errors.array(),
-          });
-        }
-      );
+      res.send("Error");
       return;
     }
+    // Create a Book object with escaped and trimmed data.
+    const instrument = new Instrument({
+      category: req.body.category,
+      brand: req.body.brand,
+      // artist: req.body.artist,
+      model: req.body.model,
+      dataClass : "instrument"
+      // price: req.body.price,
+    });
 
     // Data from form is valid. Save book.
     instrument.save((err) => {
@@ -112,31 +82,28 @@ exports.instrument_create_post = [
         return next(err);
       }
       // Successful: redirect to new book record.
-      res.redirect(instrument.url);
     });
+    console.log("Instrument Created");
   },
 ];
 
 exports.instrument_list = (req, res, next) => {
-  Instrument.find({}, "class brand")
-  .sort({ brand: 1 })
-  .populate("brand")
-  .exec(function (err, list_instruments) {
-    if (err) {
-      return next(err);
-    }
-    //Successful, so render
-    res.render("instrument_list", { title: "Instrument List", instrument_list: list_instruments });
-  });
-}
+  Instrument.find()
+    .sort([["brand", "ascending"]])
+    .exec(function (err, list_instruments) {
+      if (err) {
+        return next(err);
+      }
+      res.json(list_instruments);
+    });
+  //Successful, so render
+};
 
 exports.instrument_detail = (req, res, next) => {
   async.parallel(
     {
       instrument(callback) {
-        Instrument.findById(req.params.id)
-          .populate("artist")
-          .exec(callback);
+        Instrument.findById(req.params.id).populate("artist").exec(callback);
       },
       // book_instance(callback) {
       //   BookInstance.find({ book: req.params.id }).exec(callback);
@@ -160,7 +127,7 @@ exports.instrument_detail = (req, res, next) => {
       });
     }
   );
-}
+};
 
 exports.instrument_delete_get = (req, res, next) => {
   async.parallel(
@@ -187,27 +154,16 @@ exports.instrument_delete_get = (req, res, next) => {
       });
     }
   );
-}
+};
 
 exports.instrument_delete_post = (req, res, next) => {
-  async.parallel(
-    {
-      instrument(callback) {
-        Instrument.findById(req.params.id).exec(callback);
-      },
-    },
-    (err, results) => {
-      if (err) {
-        return next(err);
-      }
-      // Nook has no instances. Delete object and redirect to the list of books.
-      Instrument.findByIdAndRemove(req.body.instrumentid, (err) => {
-        if (err) {
-          return next(err);
-        }
-        // Success - go to author list
-        res.redirect("/inventory/intrument");
-      });
+  Instrument.findByIdAndRemove(req.params.id, (err, x) => {
+    if (err) {
+      return next(err);
     }
-  );
-}
+
+    res.send(console.log("working"));
+    res.send(console.log(x));
+    res.send(console.log(req.params.id));
+  });
+};

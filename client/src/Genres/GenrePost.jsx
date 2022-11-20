@@ -1,12 +1,13 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
-import { genreObjeto, artistObjeto } from "../Context/Context";
+import { genreObjeto, artistObjeto, instrumentObjeto } from "../Context/Context";
 import FormTest from "./formTest";
 
 const GenrePost = () => {
   const [categoryState, setCategoryState] = useState("artist");
   const artist = useContext(artistObjeto);
   const genre = useContext(genreObjeto);
+  const instrument = useContext(instrumentObjeto);
 
   console.log(categoryState);
 
@@ -20,6 +21,9 @@ const GenrePost = () => {
       console.log(data);
     } else if (categoryState == "genre") {
       data = genre;
+      console.log(data);
+    } else if (categoryState == "instrument") {
+      data = instrument;
       console.log(data);
     }
 
@@ -39,7 +43,7 @@ const GenrePost = () => {
       <div className="col-3 bg-info bg-opacity-50 row m-0 p-0">
         <div className="col-2"></div>
         <form onSubmit={handlePost} className="col-8"> 
-        {/* With onSubmit={() => handlePost()} wont work*/}
+        {/* With "onSubmit={() => handlePost()}" wont work*/}
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Category Select</label>
             <select

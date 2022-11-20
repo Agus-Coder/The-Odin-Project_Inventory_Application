@@ -144,7 +144,7 @@ exports.artist_delete_get = (req, res, next) => {
   );
 }
 
-exports.artist_delete_post = (req, res, next) => {
+exports.artist_delete_post = (req, res) => {
 
   Artist.findByIdAndRemove(req.params.id, (err, x) => {
     if (err) {

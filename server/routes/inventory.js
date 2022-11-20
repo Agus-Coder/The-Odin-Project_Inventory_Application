@@ -27,7 +27,7 @@ router.get("/instrument/:id", instrument_controller.instrument_detail);
 router.get("/instrument/:id/delete", instrument_controller.instrument_delete_get);
 
 // POST delete instrument from the list
-router.post("/instrument/:id/delete", instrument_controller.instrument_delete_post);
+router.delete("/instrument/:id/delete", instrument_controller.instrument_delete_post);
 
 
 // ------------ ARTIST ROUTES ------------ //
@@ -48,7 +48,7 @@ router.get("/artist/:id", artist_controller.artist_detail);
 router.get("/artist/:id/delete", artist_controller.artist_delete_get);
 
 // POST delete artist from the list
-router.post("/artist/:id/delete", artist_controller.artist_delete_post);
+router.delete("/artist/:id/delete", artist_controller.artist_delete_post);
 
 // // ------------ GENRE ROUTES ------------ //
 
