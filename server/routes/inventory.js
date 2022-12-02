@@ -5,6 +5,7 @@ const router = express.Router();
 const instrument_controller = require("../controllers/instrumentController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
+const user_Controller = require("../controllers/userController");
 
 // ------------ INSTRUMENT ROUTES ------------ //
 
@@ -69,6 +70,11 @@ router.get("/genre/:id/delete", genre_controller.genre_delete_get);
 
 // POST delete genre from the list
 router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
+
+
+// user Creation
+
+router.post("/sign-up", user_Controller.user_creation_post)
 
 
 

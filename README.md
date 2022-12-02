@@ -12,3 +12,8 @@ So, for future projects:
 
 - It would be far more productive to, in first place, design the UI, and then code it
 - For god's sake, make a #$%^@# project data flowchart.
+
+
+Roadmap:
+
+- 

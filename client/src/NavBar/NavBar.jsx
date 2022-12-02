@@ -8,7 +8,7 @@ function NavBar() {
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
         <Link to={"/"}>
-          <Navbar.Brand>Storm</Navbar.Brand>
+          <Navbar.Brand>Storm Devs</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
