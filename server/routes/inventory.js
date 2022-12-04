@@ -76,6 +76,10 @@ router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 
 router.post("/sign-up", user_Controller.user_creation_post)
 
+// user login
+
+router.post("/log-in", user_Controller.user_login_post)
+
 
 
 module.exports = router;
