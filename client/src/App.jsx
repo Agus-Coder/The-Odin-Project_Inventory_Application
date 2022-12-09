@@ -1,21 +1,18 @@
 import "./App.css";
-import NavBar from "./NavBar/NavBar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import InventoryContainer from "./InventoryContainer/InventoryContainer";
-import Footer from "./Footer/Footer";
-import SignUpForm from "./Users/UserForm";
-import Login from "./Login/Login";
+
+import UserForm from "./Users/UserForm";
+import LogIn from "./Pages/LogIn";
 
 function App() {
   return (
     <BrowserRouter>
-      <NavBar />
       <Routes>
-        <Route path="/inventory/log-in" element={<Login />} />
+        <Route path="/" element={<LogIn />} />
         <Route path="/inventory/" element={<InventoryContainer />} />
-        <Route path="/inventory/createAccount" element={<SignUpForm />} />
+        <Route path="/createAccount" element={<UserForm />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }
