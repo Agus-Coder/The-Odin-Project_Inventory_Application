@@ -3,13 +3,13 @@ const DeleteButton = ({ el }) => {
 
     e.preventDefault()
 
-    fetch("http://localhost:3000/inventory/"+ el.dataClass +"/" + el._id + "/delete", {
+    fetch("http://localhost:3000/"+ el.dataClass +"/" + el._id + "/delete", {
       method: "DELETE",
     });
     // const json = await response.json() // here it is saved the document that we just deleted
     console.log(el._id);
     console.log(el.dataClass);
-    console.log("http://localhost:3000/inventory/"+ el.dataClass +"/" + el._id + "/delete");
+    console.log("http://localhost:3000/"+ el.dataClass +"/" + el._id + "/delete");
   };
 
   return (

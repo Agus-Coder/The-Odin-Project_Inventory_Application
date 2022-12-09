@@ -88,7 +88,7 @@ const LogIn = () => {
           {/* <!-- Register buttons --> */}
           <div className="text-center">
             <p>
-              Not a member? <Link to="/createAccount">Register</Link> 
+              Not a member? <Link to="/sign-up">Register</Link> 
             
             </p>
           </div>

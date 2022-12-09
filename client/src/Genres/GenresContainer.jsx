@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ItemList from "./ItemList";
+import './GenresContainer.css'
 
 function GenresContainer() {
   const [genreInfo, setGenreInfo] = useState([]);
@@ -8,25 +9,25 @@ function GenresContainer() {
   
   
   useEffect(() => {
-    fetch("http://localhost:3000/inventory/genre/list")
+    fetch("http://localhost:3000/genre/list")
       .then((res) => res.json()) //este paso ya te convierte el json en un array de objs
       .then((res) => setGenreInfo(res));
   }, []);
   
   useEffect(() => {
-    fetch("http://localhost:3000/inventory/artist/list")
+    fetch("http://localhost:3000/artist/list")
       .then((res) => res.json()) //este paso ya te convierte el json en un array de objs
       .then((res) => setArtistInfo(res))
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3000/inventory/instrument/list")
+    fetch("http://localhost:3000/instrument/list")
       .then((res) => res.json()) //este paso ya te convierte el json en un array de objs
       .then((res) => setInstrumentInfo(res))
   }, []);
 
   return (
-    <div className="col-8 bg-dark text-light">
+    <div className="bg-dark text-light GenresContainer">
       <div className="row justify-content-md-center">
         {genreInfo.map((el) => (
           <ItemList el={el} key={el._id}/>

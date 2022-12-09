@@ -9,8 +9,6 @@ const user_Controller = require("../controllers/userController");
 
 // ------------ INSTRUMENT ROUTES ------------ //
 
-// GET home page
-router.get("/", instrument_controller.index);
 
 // GET request for creating a new instrument
 router.get("/instrument/create", instrument_controller.instrument_create_get);
@@ -77,8 +75,6 @@ router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 router.post("/sign-up", user_Controller.user_creation_post)
 
 // user login
-
-router.post("/log-in", user_Controller.user_login_post)
 
 
 

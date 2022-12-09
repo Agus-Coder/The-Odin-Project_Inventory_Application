@@ -9,7 +9,7 @@ const UserForm = () => {
   data.password = password;
 
   const createUser = () => {
-    fetch(`http://localhost:3000/inventory/sign-up`, {
+    fetch(`http://localhost:3000/sign-up`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(data),

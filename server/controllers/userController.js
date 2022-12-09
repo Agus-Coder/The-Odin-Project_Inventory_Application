@@ -13,10 +13,5 @@ exports.user_creation_post = (req, res, next) => {
       return next(err);
     }
   });
-  res.redirect("/log-in");
+  res.redirect("/login");
 };
-
-exports.user_login_post = passport.authenticate("local", {
-  successRedirect: "/inventory/",
-  failureRedirect: "/inventory/log-in",
-});

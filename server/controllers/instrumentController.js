@@ -9,10 +9,6 @@ const async = require("async");
 // Instrument refers artists and genres, so, you can delete inst, but NOT artist or genres, its deletion would cause
 // an empty data space for instrument
 
-exports.index = (req, res) => {
-  res.send("NOT IMPLEMENTED: BookInstance update GET");
-};
-
 exports.instrument_create_get = (req, res, next) => {
   // get artist and genres for filling our instruments
   async.parallel(

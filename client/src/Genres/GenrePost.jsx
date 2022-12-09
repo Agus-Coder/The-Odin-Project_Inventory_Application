@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import { genreObjeto, artistObjeto, instrumentObjeto } from "../Context/Context";
 import FormTest from "./formTest";
+import './GenrePost.css'
 
 const GenrePost = () => {
   const [categoryState, setCategoryState] = useState("artist");
@@ -27,7 +28,7 @@ const GenrePost = () => {
       console.log(data);
     }
 
-    fetch(`http://localhost:3000/inventory/${categoryState}/create`, {
+    fetch(`http://localhost:3000/${categoryState}/create`, {
       method: "POST",
       mode: "cors",
       body: JSON.stringify(data),
@@ -40,9 +41,8 @@ const GenrePost = () => {
 
   return (
     <>
-      <div className="col-3 bg-info bg-opacity-50 row m-0 p-0">
-        <div className="col-2"></div>
-        <form onSubmit={handlePost} className="col-8"> 
+      <div className="bg-info bg-opacity-50 GenrePost">
+        <form onSubmit={handlePost}> 
         {/* With "onSubmit={() => handlePost()}" wont work*/}
           <div className="form-group">
             <label htmlFor="exampleFormControlSelect1">Category Select</label>
@@ -66,7 +66,6 @@ const GenrePost = () => {
             Create
           </button>
         </form>
-        <div className="col-2"></div>
       </div>
     </>
   );
