@@ -9,6 +9,7 @@ const UserForm = () => {
   data.password = password;
 
   const createUser = () => {
+
     fetch(`http://localhost:3000/sign-up`, {
       method: "POST",
       mode: "cors",
@@ -16,7 +17,8 @@ const UserForm = () => {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    });
+    })
+    console.log(typeof(data))
   };
 
   return (

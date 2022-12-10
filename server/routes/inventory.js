@@ -6,6 +6,7 @@ const instrument_controller = require("../controllers/instrumentController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
 const user_Controller = require("../controllers/userController");
+const login_Controller = require("../controllers/loginController")
 
 // ------------ INSTRUMENT ROUTES ------------ //
 
