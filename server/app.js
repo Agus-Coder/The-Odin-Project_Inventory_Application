@@ -65,6 +65,76 @@ app.use(
 );
 
 module.exports = app;
+
+// --------------- Sessions tutorial part 1 --------------- //
+
+/* 
+So, let's get a grip in what we just learned. The 'new' code is:
+
+const MongoStore = require("connect-mongo");
+const session = require("express-session");
+
+those are the packages used in our server for connect to the database and to engage a session in it.
+
+--------------
+
+MongoStore => Connect us to a determinate collection using:
+
+const testStore = MongoStore.create({
+  mongoUrl: dbString,
+  collection: "sessions",
+});
+
+I don't fully think that this section of code is truly necessary, but it allow the app
+to enter in a determinate collection.
+
+--------------
+
+Session => This is the core middleware. It contains all the options needed for configure the session,
+as its name says, and the cookies.
+
+app.use(
+  session({
+    secret: process.env.TOP_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: testStore,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+
+Remember that app.use() configures a determinate middleware for the server to use.
+The session middleware contains an object that indicates all the options needed for it functioning
+
+secret: Secret word for session storage in DB
+resave: DK
+saveUninitialized: DK
+store: The collection where sessions will be saved
+cookie: cookie's configurations
+
+
+*//*
+
+Sessions
+A web application needs the ability to identify users as they browse from page to page.
+This series of requests and responses, each associated with the same user, is known as a session.
+
+HTTP is a stateless protocol, meaning that each request to an application can be understood in
+isolation - without any context from previous requests. This poses a challenge for web applications
+with logged in users, as the authenticated user needs to be remembered across subsequent requests as
+ they navigate the application.
+
+To solve this challenge, web applications make use of sessions, which allow state to be maintained
+between the application server and the user's browser. A session is established by setting an HTTP
+cookie in the browser, which the browser then transmits to the server on every request. The server
+uses the value of the cookie to retrieve information it needs across multiple requests. In effect,
+this creates a stateful protocol on top of HTTP.
+
+ */
+
+
 // app.use(passport.initialize());
 // app.use(passport.session());
 // app.use(express.urlencoded({ extended: false }));
@@ -124,24 +194,7 @@ module.exports = app;
 //   });
 // });
 
-// /*
 
-// Sessions
-// A web application needs the ability to identify users as they browse from page to page.
-// This series of requests and responses, each associated with the same user, is known as a session.
-
-// HTTP is a stateless protocol, meaning that each request to an application can be understood in
-// isolation - without any context from previous requests. This poses a challenge for web applications
-// with logged in users, as the authenticated user needs to be remembered across subsequent requests as
-//  they navigate the application.
-
-// To solve this challenge, web applications make use of sessions, which allow state to be maintained
-// between the application server and the user's browser. A session is established by setting an HTTP
-// cookie in the browser, which the browser then transmits to the server on every request. The server
-// uses the value of the cookie to retrieve information it needs across multiple requests. In effect,
-// this creates a stateful protocol on top of HTTP.
-
-// */
 
 app.get("/", (req, res, next) => {
   console.log(req.session);
