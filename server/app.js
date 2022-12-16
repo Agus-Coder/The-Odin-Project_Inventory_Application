@@ -168,35 +168,7 @@ this creates a stateful protocol on top of HTTP.
 // // to the pattern passport-{name}. For instance, the LocalStrategy configured above is named local
 // // as it is distributed in the passport-local package.
 
-// /*
-//   Once registered, the strategy can be employed to authenticate a request by passing the name of the
-//   strategy as the first argument to passport.authenticate() middleware:
-// */
-
-// // esta es la logica que maneja lo que va a suceder after a succesfull login
-// app.post(
-//   "/login",
-//   passport.authenticate("local", (res, req) => {
-//     console.log("Login succesful");
-//   }),
-//   (req, res) => {
-//     res.json({ message: "Welcome!" });
-//   }
-// );
-
-// passport.serializeUser(function (user, done) {
-//   done(null, user.id);
-// });
-
-// passport.deserializeUser(function (id, done) {
-//   User.findById(id, function (err, user) {
-//     done(err, user);
-//   });
-// });
-
-
 
 app.get("/", (req, res, next) => {
-  console.log(req.session);
   res.send("Hello there!");
 });
