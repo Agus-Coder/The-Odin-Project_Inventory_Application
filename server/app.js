@@ -3,6 +3,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const passport = require("passport")
 
 app.use(bodyParser.urlencoded({ extended: false })); // Observation: Express wont work without body parser implementation
 app.use(bodyParser.json());
@@ -63,6 +64,8 @@ app.use(
     },
   })
 );
+
+
 
 module.exports = app;
 
