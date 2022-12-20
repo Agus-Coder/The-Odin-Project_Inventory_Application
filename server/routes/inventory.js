@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const passport = require("passport")
 
 // Require controller modules
 const instrument_controller = require("../controllers/instrumentController");
@@ -77,6 +78,16 @@ router.post("/sign-up", user_Controller.user_creation_post)
 
 // user login
 
+router.post("/login", passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
+
+
+router.get('/login-success', (req, res, next) => {
+    res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>');
+});
+
+router.get('/login-failure', (req, res, next) => {
+    res.send('You entered the wrong password.');
+});
 
 
 
