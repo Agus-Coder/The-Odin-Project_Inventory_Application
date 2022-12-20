@@ -22,9 +22,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
     "morgan": "~1.9.1",
-    "passport": "^0.6.0",
+    "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^5.0.1"
   },
   "devDependencies": {
     "dotenv": "^16.0.3",

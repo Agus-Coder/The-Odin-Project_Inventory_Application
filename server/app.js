@@ -17,10 +17,7 @@ app.use(cors());
 
 require("dotenv").config();
 
-// ----------------      Routes     ---------------- //
 
-const inventory = require("./routes/inventory");
-app.use("/", inventory);
 
 // -------------- Database Connection -------------- //
 
@@ -36,28 +33,23 @@ const dbOptions = {
 
 mongoose.connect(dbString, dbOptions);
 
-const connection = mongoose.createConnection(dbString, dbOptions);
-
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => console.log("Connected to mongoose"));
 
-const User = require("./models/user");
-
-// const passport = require("passport");
-// const LocalStrategy = require("passport-local").Strategy;
 
 const testStore = MongoStore.create({
   mongoUrl: dbString,
   collection: "sessions",
 });
 
+
 app.use(
   session({
     secret: process.env.TOP_SECRET,
-    resave: false,
     saveUninitialized: true,
+    resave: false,
     store: testStore,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
@@ -65,8 +57,21 @@ app.use(
   })
 );
 
+require('./strategies/localStrategy')
+
 app.use(passport.initialize());
-app.use(passport.session())
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  console.log(req.session);
+  console.log(req.user);
+  next();
+});
+
+// ----------------      Routes     ---------------- //
+
+const inventory = require("./routes/inventory");
+app.use("/", inventory);
 
 
 module.exports = app;

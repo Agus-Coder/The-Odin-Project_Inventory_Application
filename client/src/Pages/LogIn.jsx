@@ -1,19 +1,29 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./LogIn.css";
 
 const LogIn = () => {
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+
+  useEffect(()=>{
+    console.log('mounted and sessioned');
+    fetch(`http://localhost:3000/`,{})
+  },[])
 
   let data = {}
 
-  data.email = email
+  data.username = username
   data.password = password
 
-  const LogInTry = () => {
+  const LogInTry = (e) => {
+
+    e.preventDefault()
+
     fetch(`http://localhost:3000/login`, {
       method: "POST",
+      // credentials: "include",
       mode: "cors",
       body: JSON.stringify(data),
       headers: {
@@ -31,11 +41,11 @@ const LogIn = () => {
           <div className="form-outline mb-4">
             <input
               placeholder="@instruments.com"
-              type="email"
+              type="username"
               id="form2Example1"
               className="form-control inputStyles"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
+              onChange={(e) => setUsername(e.target.value)}
+              value={username}
             />
             <label className="form-label" htmlFor="form2Example1">
               Email address

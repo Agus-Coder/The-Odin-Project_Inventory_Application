@@ -8,6 +8,8 @@ const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
 const user_Controller = require("../controllers/userController");
 const login_Controller = require("../controllers/loginController")
+const isAuth = require('./Auth/authMiddleware').isAuth;
+const isAdmin = require('./Auth/authMiddleware').isAdmin;
 
 // ------------ INSTRUMENT ROUTES ------------ //
 
@@ -78,15 +80,15 @@ router.post("/sign-up", user_Controller.user_creation_post)
 
 // user login
 
-router.post("/login", passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
+router.post("/login", (req, res, next)=>{console.log(req.body.username, req.body.password); next()} , passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
 
 
 router.get('/login-success', (req, res, next) => {
-    res.send('<p>You successfully logged in. --> <a href="/protected-route">Go to protected route</a></p>');
+    console.log('logged');
 });
 
 router.get('/login-failure', (req, res, next) => {
-    res.send('You entered the wrong password.');
+    console.log('not logged');
 });
 
 
