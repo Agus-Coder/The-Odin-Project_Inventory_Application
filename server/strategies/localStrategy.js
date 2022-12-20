@@ -1,4 +1,5 @@
 const passport = require("passport");
+const user = require("../models/user");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("../models/user");
 
@@ -28,3 +29,21 @@ const verifyFunction = (username, password, end) => {
       end(err);
     });
 };
+
+const strategy = new LocalStrategy(customFields, verifyFunction);
+
+passport.use(strategy);
+
+passport.serializeUser((user, end) => {
+  end(null, user.id);
+});
+
+passport.deserializeUser((userId, end) => {
+  User.findById(userId)
+    .then((user) => {
+      end(null, user);
+    })
+    .catch((err) => {
+      end(err);
+    });
+});
