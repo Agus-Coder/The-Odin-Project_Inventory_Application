@@ -80,11 +80,11 @@ router.post("/sign-up", user_Controller.user_creation_post)
 
 // user login
 
-router.post("/login", (req, res, next)=>{console.log(req.body.username, req.body.password); next()} , passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
+router.post("/login", (req, res, next)=>{console.log(req.body.username, req.body.password, "logged (router.post '/login')"); next()} , passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
 
 
 router.get('/login-success', (req, res, next) => {
-    console.log('logged');
+    console.log('Logged! (console.log from router.get "/login-Succes")');
 });
 
 router.get('/login-failure', (req, res, next) => {

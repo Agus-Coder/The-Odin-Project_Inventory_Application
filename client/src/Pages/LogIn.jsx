@@ -7,11 +7,6 @@ const LogIn = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
-  useEffect(()=>{
-    console.log('mounted and sessioned');
-    fetch(`http://localhost:3000/`,{})
-  },[])
-
   let data = {}
 
   data.username = username

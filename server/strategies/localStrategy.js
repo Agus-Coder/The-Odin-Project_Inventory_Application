@@ -9,8 +9,6 @@ const verifyFunction = (username, password, end) => {
 
   User.findOne({ username: username })
     .then((user) => {
-
-      console.log('paso1');
       if (!user) {
         return end(null, false);
       }
@@ -18,7 +16,7 @@ const verifyFunction = (username, password, end) => {
       const isValid = validatePassFunction(password, user.hash, user.salt);
 
       if (isValid) {
-        console.log('logged!');
+        console.log('logged! (VerifyFunction from LocalStrategy)');
         return end(null, user);
       } else {
         return end(null, false);
