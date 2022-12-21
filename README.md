@@ -18,8 +18,9 @@ So, for future projects:
 - For god's sake, make a #$%^@# project flowchart.
 
 
-Roadmap:
+Cooments:
 - Finalize user login feature
+- JWT to be applied for a Fullstack app
 
 
 ### Notas Personales, Español
