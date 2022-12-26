@@ -3,6 +3,11 @@ Exercise app from the odin project Fullstack course
 
 ### Personal Notes, English
 
+
+December 26, 2022
+- Passport.js is to be used in 'Classic' webs, where you do not have a code for the front, and other in the back
+- Then, JWT must be used for API security
+
 December 20, 2022
 - Passport.js it is really complex to implement. There are a lot of elements to implement and be aware of.
 - Up to this point in the development, users can be generated with secured passwords (Node Crypto implemented)
