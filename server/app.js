@@ -3,7 +3,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const passport = require("passport")
+const passport = require("passport");
 
 app.use(bodyParser.urlencoded({ extended: false })); // Observation: Express wont work without body parser implementation
 app.use(bodyParser.json());
@@ -17,7 +17,73 @@ app.use(cors());
 
 require("dotenv").config();
 
+// -------------- JWT -------------- //
+const jwt = require("jsonwebtoken");
 
+app.get("/api", (req, res) => {
+  res.json({
+    message: "Welcome to the API",
+  });
+});
+
+app.post("/api/posts", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretKeygoesHere", (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      res.json({
+        message: "Post created",
+        authData,
+      });
+    }
+  });
+});
+
+/*
+  This is the most basic token generation.
+  The middleware 'verify' execution in here is what STOPS the next middleware (req, res, etc etc) 
+*/
+
+app.post("/api/login", (req, res) => {
+  //Mock User
+  const user = {
+    id: 1,
+    username: "Agus",
+  };
+
+  jwt.sign({ user }, "secretKeygoesHere", {expiresIn: '10s'}, (err, token) => {
+    res.json({
+      token, //this token has to be saved in the client local storage
+    });
+  });
+});
+
+// FORMAT OF TOKEN
+// Authorization: Bearer <access_token>
+
+//verify Function
+
+function verifyToken(req, res, next) {
+  // get auth header value, the token is always sended in the header
+  const bearerHeader = req.headers["authorization"];
+  // Check if bearer is undefined
+  if (typeof bearerHeader !== "undefined") {
+    // split at the space
+    const bearer = bearerHeader.split(" ");
+
+    // get token from array
+    const bearerToken = bearer[1];
+
+    // set the token
+    req.token = bearerToken;
+
+    // call next function
+    next();
+  } else {
+    //forbidden
+    res.sendStatus(403);
+  }
+}
 
 // -------------- Database Connection -------------- //
 
@@ -38,12 +104,10 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => console.log("Connected to mongoose"));
 
-
 const testStore = MongoStore.create({
   mongoUrl: dbString,
   collection: "sessions",
 });
-
 
 app.use(
   session({
@@ -57,7 +121,7 @@ app.use(
   })
 );
 
-require('./strategies/localStrategy')
+require("./strategies/localStrategy");
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -72,7 +136,6 @@ app.use((req, res, next) => {
 
 const inventory = require("./routes/inventory");
 app.use("/", inventory);
-
 
 module.exports = app;
 
@@ -125,7 +188,7 @@ store: The collection where sessions will be saved
 cookie: cookie's configurations
 
 
-*//*
+*/ /*
 
 Sessions
 A web application needs the ability to identify users as they browse from page to page.
@@ -143,7 +206,6 @@ uses the value of the cookie to retrieve information it needs across multiple re
 this creates a stateful protocol on top of HTTP.
 
  */
-
 
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -177,7 +239,6 @@ this creates a stateful protocol on top of HTTP.
 // // All strategies have a name which, by convention, corresponds to the package name according
 // // to the pattern passport-{name}. For instance, the LocalStrategy configured above is named local
 // // as it is distributed in the passport-local package.
-
 
 app.get("/", (req, res, next) => {
   res.send("Hello there!");
