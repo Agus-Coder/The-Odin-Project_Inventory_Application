@@ -51,7 +51,7 @@ app.post("/api/login", (req, res) => {
     username: "Agus",
   };
 
-  jwt.sign({ user }, "secretKeygoesHere", {expiresIn: '10s'}, (err, token) => {
+  jwt.sign({ user }, "secretKeygoesHere", {expiresIn: '30s'}, (err, token) => {
     res.json({
       token, //this token has to be saved in the client local storage
     });
@@ -88,8 +88,8 @@ function verifyToken(req, res, next) {
 // -------------- Database Connection -------------- //
 
 const mongoose = require("mongoose");
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
+// const session = require("express-session");
+// const MongoStore = require("connect-mongo");
 
 const dbString = process.env.DATABASE_URL;
 const dbOptions = {
@@ -104,38 +104,43 @@ const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => console.log("Connected to mongoose"));
 
-const testStore = MongoStore.create({
-  mongoUrl: dbString,
-  collection: "sessions",
-});
+// const testStore = MongoStore.create({
+//   mongoUrl: dbString,
+//   collection: "sessions",
+// });
 
-app.use(
-  session({
-    secret: process.env.TOP_SECRET,
-    saveUninitialized: true,
-    resave: false,
-    store: testStore,
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-    },
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.TOP_SECRET,
+//     saveUninitialized: true,
+//     resave: false,
+//     store: testStore,
+//     cookie: {
+//       maxAge: 1000 * 60 * 60 * 24,
+//     },
+//   })
+// );
 
 require("./strategies/localStrategy");
 
+
+// app.use('/auth2', auth);
+
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 
-app.use((req, res, next) => {
-  console.log(req.session);
-  // console.log(req.user);
-  next();
-});
+// app.use((req, res, next) => {
+  //   console.log(req.session);
+  //   // console.log(req.user);
+  //   next();
+  // });
+  
 
-// ----------------      Routes     ---------------- //
-
-const inventory = require("./routes/inventory");
-app.use("/", inventory);
+  // ----------------      Routes     ---------------- //
+  
+  const inventory = require("./routes/inventory");
+  app.use("/", inventory);
+  require('./routes/auth');
 
 module.exports = app;
 

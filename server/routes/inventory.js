@@ -1,18 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport")
+const passport = require("passport");
 
 // Require controller modules
 const instrument_controller = require("../controllers/instrumentController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
 const user_Controller = require("../controllers/userController");
-const login_Controller = require("../controllers/loginController")
-const isAuth = require('./Auth/authMiddleware').isAuth;
-const isAdmin = require('./Auth/authMiddleware').isAdmin;
+const login_Controller = require("../controllers/loginController");
+const isAuth = require("./Auth/authMiddleware").isAuth;
+const isAdmin = require("./Auth/authMiddleware").isAdmin;
 
 // ------------ INSTRUMENT ROUTES ------------ //
-
 
 // GET request for creating a new instrument
 router.get("/instrument/create", instrument_controller.instrument_create_get);
@@ -27,11 +26,16 @@ router.get("/instrument/list", instrument_controller.instrument_list);
 router.get("/instrument/:id", instrument_controller.instrument_detail);
 
 // GET delete instrument from the list
-router.get("/instrument/:id/delete", instrument_controller.instrument_delete_get);
+router.get(
+  "/instrument/:id/delete",
+  instrument_controller.instrument_delete_get
+);
 
 // POST delete instrument from the list
-router.delete("/instrument/:id/delete", instrument_controller.instrument_delete_post);
-
+router.delete(
+  "/instrument/:id/delete",
+  instrument_controller.instrument_delete_post
+);
 
 // ------------ ARTIST ROUTES ------------ //
 
@@ -73,24 +77,28 @@ router.get("/genre/:id/delete", genre_controller.genre_delete_get);
 // POST delete genre from the list
 router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 
-
 // user Creation
 
-router.post("/sign-up", user_Controller.user_creation_post)
+router.post("/sign-up", user_Controller.user_creation_post);
 
 // user login
 
-router.post("/login", (req, res, next)=>{console.log(req.body.username, req.body.password, "logged (router.post '/login')"); next()} , passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: 'login-success' }))
+router.post(
+  "/login",
+  (req, res, next) => {
+    console.log("logged (router.post '/login')");
+    next();
+  },
+  passport.authenticate("local", { session: false }), //Hasta aca el usuario es buscado y encontrado en la data base
+//   (user)=>{console.log(user);}
+);
 
-
-router.get('/login-success', (req, res, next) => {
-    console.log('Logged! (console.log from router.get "/login-Succes")');
+router.get("/login-success", (req, res, next) => {
+  console.log('Logged! (console.log from router.get "/login-Succes")');
 });
 
-router.get('/login-failure', (req, res, next) => {
-    console.log('not logged');
+router.get("/login-failure", (req, res, next) => {
+  console.log("not logged");
 });
-
-
 
 module.exports = router;
