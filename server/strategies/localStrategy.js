@@ -3,9 +3,8 @@ const User = require("../models/user");
 const LocalStrategy = require("passport-local").Strategy;
 const validatePassFunction = require("../routes/Auth/passUtils").validPassword;
 
-const verifyFunction = (username, password, end) => {
 
-  console.log('works here')
+const verifyFunction = (username, password, end) => {
 
   User.findOne({ username: username })
     .then((user) => {
@@ -16,8 +15,8 @@ const verifyFunction = (username, password, end) => {
       const isValid = validatePassFunction(password, user.hash, user.salt);
 
       if (isValid) {
-        console.log(user);
-        return end(null, user);
+        console.log('workin');
+        return end(null, user); //End lo que hace es dar un exito a la funcion y llamar al metodo next
       } else {
         return end(null, false);
       }
@@ -29,7 +28,7 @@ const verifyFunction = (username, password, end) => {
 
 const strategy = new LocalStrategy(verifyFunction);
 
-passport.use(strategy);
+passport.use('login', strategy);
 
 passport.serializeUser((user, end) => {
   end(null, user.id);

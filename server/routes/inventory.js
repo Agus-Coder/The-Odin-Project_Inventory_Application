@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("passport");
+const jwt = require("jsonwebtoken");
 
 // Require controller modules
 const instrument_controller = require("../controllers/instrumentController");
@@ -85,12 +86,27 @@ router.post("/sign-up", user_Controller.user_creation_post);
 
 router.post(
   "/login",
-  (req, res, next) => {
-    console.log("logged (router.post '/login')");
-    next();
-  },
-  passport.authenticate("local", { session: false }), //Hasta aca el usuario es buscado y encontrado en la data base
-//   (user)=>{console.log(user);}
+  async (req, res, next) => {
+    passport.authenticate("login", async (err, user, info) => {
+      try {
+        if (err || !user) {
+          console.log(err);
+          const error = new Error("new Error");
+          return next(error);
+        }
+
+        req.login(user, { session: false }, async (err) => {
+          if (err) return next(err);
+          const body = { _id: user._id, email: user.email };
+
+          const token = jwt.sign({ user: body }, "top_secret");
+          return res.json({ token });
+        });
+      } catch (e) {
+        return next(e);
+      }
+    })(req, res, next);
+  } //Hasta aca el usuario es buscado y encontrado en la data base
 );
 
 router.get("/login-success", (req, res, next) => {
@@ -102,3 +118,5 @@ router.get("/login-failure", (req, res, next) => {
 });
 
 module.exports = router;
+
+router.post("/login");
