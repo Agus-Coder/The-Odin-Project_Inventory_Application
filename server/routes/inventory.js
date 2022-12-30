@@ -80,7 +80,7 @@ router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 
 // user Creation
 
-router.post("/sign-up", user_Controller.user_creation_post);
+router.post("/sign-up", user_Controller.user_creation_post, (req, res, next) => {res.status(201).send('Nice!')});
 
 // user login
 
@@ -106,16 +106,8 @@ router.post(
         return next(e);
       }
     })(req, res, next);
-  } //Hasta aca el usuario es buscado y encontrado en la data base
+  }
 );
-
-router.get("/login-success", (req, res, next) => {
-  console.log('Logged! (console.log from router.get "/login-Succes")');
-});
-
-router.get("/login-failure", (req, res, next) => {
-  console.log("not logged");
-});
 
 module.exports = router;
 

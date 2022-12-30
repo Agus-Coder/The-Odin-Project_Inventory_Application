@@ -15,8 +15,8 @@ exports.user_creation_post = (req, res, next) => {
 
   user.save((err) => {
     if (err) {
-      console.log("Error");
       return next(err);
     }
   });
+  next()
 };

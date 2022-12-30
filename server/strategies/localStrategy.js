@@ -9,14 +9,15 @@ const verifyFunction = (username, password, end) => {
   User.findOne({ username: username })
     .then((user) => {
       if (!user) {
+        console.log('There is no such user');
         return end(null, false);
       }
 
       const isValid = validatePassFunction(password, user.hash, user.salt);
 
       if (isValid) {
-        console.log('workin');
-        return end(null, user); //End lo que hace es dar un exito a la funcion y llamar al metodo next
+
+        return end(null, user);
       } else {
         return end(null, false);
       }
