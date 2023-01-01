@@ -25,8 +25,10 @@ const LogIn = () => {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    console.log(response.body.token);
-
+    
+    const obj = await response.json()
+    
+    localStorage.setItem('userToken', obj.token)
   };
 
   return (

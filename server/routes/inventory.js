@@ -2,15 +2,14 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const jwt = require("jsonwebtoken");
+const jwtStrategy = require("passport-jwt").Strategy;
 
 // Require controller modules
 const instrument_controller = require("../controllers/instrumentController");
 const artist_controller = require("../controllers/artistController");
 const genre_controller = require("../controllers/genreController");
 const user_Controller = require("../controllers/userController");
-const login_Controller = require("../controllers/loginController");
-const isAuth = require("./Auth/authMiddleware").isAuth;
-const isAdmin = require("./Auth/authMiddleware").isAdmin;
+const verify_controller = require("../controllers/verifyController");
 
 // ------------ INSTRUMENT ROUTES ------------ //
 
@@ -80,35 +79,50 @@ router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
 
 // user Creation
 
-router.post("/sign-up", user_Controller.user_creation_post, (req, res, next) => {res.status(201).send('Nice!')});
+router.post(
+  "/sign-up",
+  user_Controller.user_creation_post,
+  (req, res, next) => {
+    res.status(201).send("Nice!");
+  }
+);
 
 // user login
 
-router.post(
-  "/login",
-  async (req, res, next) => {
-    passport.authenticate("login", async (err, user, info) => {
-      try {
-        if (err || !user) {
-          console.log(err);
-          const error = new Error("new Error");
-          return next(error);
-        }
-
-        req.login(user, { session: false }, async (err) => {
-          if (err) return next(err);
-          const body = { _id: user._id, email: user.email };
-
-          const token = jwt.sign({ user: body }, "top_secret");
-          return res.json({ token });
-        });
-      } catch (e) {
-        return next(e);
+router.post("/login", async (req, res, next) => {
+  passport.authenticate("login", async (err, user, info) => {
+    try {
+      if (err || !user) {
+        console.log(err);
+        const error = new Error("new Error");
+        return next(error);
       }
-    })(req, res, next);
+
+      req.login(user, { session: false }, async (err) => {
+        if (err) return next(err);
+
+        const body = { _id: user._id, email: user.email };
+
+        const token = jwt.sign({ user: body }, "top_secret");
+
+        res.json({ token });
+      });
+    } catch (e) {
+      return next(e);
+    }
+  })(req, res, next);
+});
+
+const jwtStrategry  = require("../strategies/jwt")
+passport.use(jwtStrategry);
+
+router.get(
+  "/protected", (req, res, next)=>{console.log('here'); next()},
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log('here too');
+    return res.status(200).send("YAY! this is a protected Route");
   }
 );
 
 module.exports = router;
-
-router.post("/login");

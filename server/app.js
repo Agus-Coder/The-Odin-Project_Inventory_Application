@@ -27,7 +27,7 @@ app.get("/api", (req, res) => {
 });
 
 app.post("/api/posts", verifyToken, (req, res) => {
-  jwt.verify(req.token, "secretKeygoesHere", (err, authData) => {
+  jwt.verify(req.token, process.env.TOP_SECRET, (err, authData) => {
     if (err) {
       res.sendStatus(403);
     } else {
@@ -51,7 +51,7 @@ app.post("/api/login", (req, res) => {
     username: "Agus",
   };
 
-  jwt.sign({ user }, "secretKeygoesHere", {expiresIn: '30s'}, (err, token) => {
+  jwt.sign({ user }, process.env.TOP_SECRET, {expiresIn: '30s'}, (err, token) => {
     res.json({
       token, //this token has to be saved in the client local storage
     });
