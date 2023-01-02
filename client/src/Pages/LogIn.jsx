@@ -1,22 +1,23 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./LogIn.css";
 
 const LogIn = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  let response;
 
-  let data = {}
+  let data = {};
 
-  data.username = username
-  data.password = password
+  data.username = username;
+  data.password = password;
 
   async function LogInTry(e) {
+    e.preventDefault();
 
-    e.preventDefault()
-
-    const response = await fetch(`http://localhost:3000/login`, {
+    response = await fetch(`http://localhost:3000/login`, {
       method: "POST",
 
       mode: "cors",
@@ -25,11 +26,20 @@ const LogIn = () => {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
-    
-    const obj = await response.json()
-    
-    localStorage.setItem('userToken', obj.token)
-  };
+
+    const obj = await response.json();
+    localStorage.setItem("userToken", obj.token);
+
+    finalLogin()
+  }
+
+  function finalLogin() {
+    if (response.ok) {
+      navigate("/");
+    } else {
+      console.log("incorrect user");
+    }
+  }
 
   return (
     <div className="LogInBody">
@@ -68,7 +78,7 @@ const LogIn = () => {
           <div className="row mb-4">
             <div className="col d-flex justify-content-center">
               {/* <!-- Checkbox --> */}
-              <div className="form-check">
+              {/* <div className="form-check">
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -79,7 +89,7 @@ const LogIn = () => {
                 <label className="form-check-label" htmlFor="form2Example31">
                   Remember me{" "}
                 </label>
-              </div>
+              </div> */}
             </div>
 
             <div className="col">
@@ -96,8 +106,7 @@ const LogIn = () => {
           {/* <!-- Register buttons --> */}
           <div className="text-center">
             <p>
-              Not a member? <Link to="/sign-up">Register</Link> 
-            
+              Not a member? <Link to="/sign-up">Register</Link>
             </p>
           </div>
         </form>

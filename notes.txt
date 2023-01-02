@@ -1,0 +1,7 @@
+Server already working with tokents
+
+Next development steps:
+
+    - Store token in users Local Storage
+    - Set header auth bearer token from react and local storage
+    - Block all pages if there is no authorization (react)

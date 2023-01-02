@@ -13,7 +13,7 @@ exports.user_creation_post = (req, res, next) => {
     }
   );
 
-  if (!userAlreadyExist) {
+  if (userAlreadyExist) {
     const saltHash = genPassword(req.body.password);
 
     const salt = saltHash.salt;
