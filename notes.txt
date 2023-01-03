@@ -2,6 +2,16 @@ Server already working with tokents
 
 Next development steps:
 
-    - Store token in users Local Storage
-    - Set header auth bearer token from react and local storage
-    - Block all pages if there is no authorization (react)
+    Done - Store token in users Local Storage
+    Done - Set header auth bearer token from react and local storage
+    Done - Block all pages if there is no authorization (react)
+    - wrong user ==> Do something useful
+    - wrong password ==> do something
+    - Create a logout button and its respective function
+    - Set members with a secret code
+    - 
+
+si se inicia mal la sesion al primer intento, un segundo inicio correcto no recarga
+la pagina y por lo tanto no accede
+
+pero, si recargo luego del segundo intento, se llega al inventario

@@ -2,16 +2,11 @@ const User = require("../models/user");
 const genPassword = require("../routes/Auth/passUtils").genPassword;
 
 exports.user_creation_post = (req, res, next) => {
-  const userAlreadyExist = User.exists(
-    { username: req.body.username },
-    function (err, doc) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Result :", doc); // false
-      }
-    }
-  );
+  let userAlreadyExist;
+
+  User.exists({ username: req.body.username }).then((result) => {
+    result === null ? (userAlreadyExist = false) : (userAlreadyExist = true);
+  });
 
   if (userAlreadyExist) {
     const saltHash = genPassword(req.body.password);
@@ -23,6 +18,7 @@ exports.user_creation_post = (req, res, next) => {
       username: req.body.username,
       hash: hash,
       salt: salt,
+      isAdmin: false,
     });
 
     user.save((err) => {

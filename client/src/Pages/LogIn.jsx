@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createContext } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LogIn.css";
@@ -8,6 +9,7 @@ const LogIn = () => {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   let response;
+  let obj;
 
   let data = {};
 
@@ -27,8 +29,11 @@ const LogIn = () => {
       },
     });
 
-    const obj = await response.json();
+    obj = await response.json();
+    console.log(obj);
     localStorage.setItem("userToken", obj.token);
+
+    console.log(response.status);
 
     finalLogin()
   }
@@ -36,8 +41,8 @@ const LogIn = () => {
   function finalLogin() {
     if (response.ok) {
       navigate("/");
-    } else {
-      console.log("incorrect user");
+    } else if(response.status == 403){
+      return
     }
   }
 

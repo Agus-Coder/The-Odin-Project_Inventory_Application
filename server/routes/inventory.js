@@ -91,21 +91,26 @@ router.post(
 
 router.post("/login", async (req, res, next) => {
   passport.authenticate("login", async (err, user, info) => {
+    // recorda que 'user' representa la devolucion de un usuario ya autentificado
+
     try {
+      // test de error o de usuario no autentificado(pass or user incorrecto)
       if (err || !user) {
-        console.log(err);
+        console.log("incorrect user or password");
+        res.status(403).json({message: 'Wrong user or password'})
         const error = new Error("new Error");
         return next(error);
       }
-
+      // el usuario existe, entonces
       req.login(user, { session: false }, async (err) => {
         if (err) return next(err);
+        console.log(user);
 
-        const body = { _id: user._id, email: user.email };
+        const body = { _id: user._id, username: user.username,  };
 
         const token = jwt.sign({ user: body }, "top_secret");
+        res.json({ token, user });
 
-        res.json({ token });
       });
     } catch (e) {
       return next(e);
@@ -113,14 +118,18 @@ router.post("/login", async (req, res, next) => {
   })(req, res, next);
 });
 
-const jwtStrategry  = require("../strategies/jwt")
+const jwtStrategry = require("../strategies/jwt");
 passport.use(jwtStrategry);
 
 router.get(
-  "/protected", (req, res, next)=>{console.log('here'); next()},
+  "/protected",
+  (req, res, next) => {
+    console.log("here");
+    next();
+  },
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log('here too');
+    console.log("here too");
     return res.status(200).send("YAY! this is a protected Route");
   }
 );

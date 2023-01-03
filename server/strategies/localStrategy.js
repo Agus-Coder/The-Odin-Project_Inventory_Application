@@ -17,7 +17,7 @@ const verifyFunction = (username, password, end) => {
 
       if (isValid) {
 
-        return end(null, user);
+        return end(null, user); // se devuelve un usuario validado
       } else {
         return end(null, false);
       }
@@ -29,7 +29,9 @@ const verifyFunction = (username, password, end) => {
 
 const strategy = new LocalStrategy(verifyFunction);
 
-passport.use('login', strategy);
+passport.use('login', strategy); //el primer parametro es el nombre que le estas poniendo al
+//recurso que passport va a usar
+// el segundo es, justamente, el recurso
 
 passport.serializeUser((user, end) => {
   end(null, user.id);

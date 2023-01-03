@@ -4,7 +4,6 @@ import InventoryContainer from "../InventoryContainer/InventoryContainer";
 import LogIn from "./LogIn";
 
 const Home = () => {
-
   function hasJWT() {
     let flag = false;
 
