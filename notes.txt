@@ -21,3 +21,5 @@ data base manipulation working
 user creation working
 user login working
 user logout not working
+
+there are features not in use, then it should be deleted
