@@ -5,8 +5,8 @@ Exercise app from the odin project Fullstack course
 
 
 December 26, 2022
-- Passport.js is to be used in 'Classic' webs, where you do not have a code for the front, and other in the back
-- Then, JWT must be used for API security
+- Passport.js LOCAL is to be used in 'Classic' webs, where you do not have a code for the front, and other in the back
+- JWT must be used for API security
 
 December 20, 2022
 - Passport.js it is really complex to implement. There are a lot of elements to implement and be aware of.
@@ -24,11 +24,18 @@ So, for future projects:
 
 
 Cooments:
-- Finalize user login feature
-- JWT to be applied for a Fullstack app
+- Finalized user login feature
+- User Logout not working
+- User deletion not implemented
+- Admin users not implemented
+- Password hashing and salting implemented
 
 
 ### Notas Personales, Español
+
+December 26, 2022
+- Passport.js local se utiliza en webs calsicas donde no se tiene un codigo para el front y otro para el back
+- JWT debe s er utilizado para la seguridad de una API
 
 Diciembre 20, 2022
 - Agrego notas en español
@@ -43,3 +50,10 @@ Entonces, para futuros proyectos:
 
 - Va a ser muchisimo mas productivo, en primer lugar, diseñar la interfaz de usuario y luego codearla
 - Por el amor de dios, crear un maldito diagrama de flujo de proyecto
+
+Cooments:
+- Finalizado inicio de sesion
+- cerrado de sesion sin implementar
+- Eliminado de usuarios sin implementar
+- Admins no implementados
+- Hasheo y Salteo de contrasenias implementado
