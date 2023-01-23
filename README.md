@@ -1,8 +1,7 @@
 # The-Odin-Project_Inventory_Application
-Exercise app from the odin project Fullstack course
+Exercise app from The Odin Project Fullstack course
 
 ## Personal Notes, English
-
 
 December 26, 2022
 - Passport.js LOCAL is to be used in 'Classic' webs, where you do not have a code for the front, and other in the back
@@ -13,7 +12,7 @@ December 20, 2022
 - Up to this point in the development, users can be generated with secured passwords (Node Crypto implemented)
 
 November 19th, 2022
-It is completely unuseful to "code on the go" the react UI or, at least, I do not have enough experience to do it so.
+It is completely unuseful to "code on the go" the React UI or, at least, I do not have enough experience to do it so.
 
 Another point: At this development's level, I'm completely lost with components and components' dependencies.
 
@@ -23,31 +22,27 @@ So, for future projects:
 - For god's sake, make a #$%^@# project flowchart.
 
 
-Cooments:
-- Finalized user login feature
-- User Logout not working
-- User deletion not implemented
-- Admin users not implemented
-- Password hashing and salting implemented
 ### Coments:
 
-Next development steps:
+#### Next development steps:
+  Done - Store token in users Local Storage
+  Done - Set header auth bearer token from react` and local storage
+  Done - Block all pages if there is no authorization (react)
+  - wrong user ==> Do something useful
+  - wrong password ==> do something
+  - Create a logout button
+  - Set members with a secret code
 
-    Done - Store token in users Local Storage
-    Done - Set header auth bearer token from react and local storage
-    Done - Block all pages if there is no authorization (react)
-    - wrong user ==> Do something useful
-    - wrong password ==> do something
-    - Create a logout button
-    - Set members with a secret code
-
-Project Status
-    Server tokens working
-    data base connection working
-    data base manipulation working
-    user creation working
-    user login working
-    user logout not implemented
+#### Project Status
+  - Server tokens                    working
+  - data base connection             working
+  - data base manipulation           working
+  - user creation                    working
+  - user login                       working
+  - Password hashing and salting     working
+  - user logout                      not implemented
+  - User deletion                    not implemented
+  - Admin users                      not implemented
 
 There are features not in use to be deleted
 
