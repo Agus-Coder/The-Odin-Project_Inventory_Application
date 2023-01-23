@@ -1,7 +1,7 @@
 # The-Odin-Project_Inventory_Application
 Exercise app from the odin project Fullstack course
 
-### Personal Notes, English
+## Personal Notes, English
 
 
 December 26, 2022
@@ -29,9 +29,30 @@ Cooments:
 - User deletion not implemented
 - Admin users not implemented
 - Password hashing and salting implemented
+### Coments:
+
+Next development steps:
+
+    Done - Store token in users Local Storage
+    Done - Set header auth bearer token from react and local storage
+    Done - Block all pages if there is no authorization (react)
+    - wrong user ==> Do something useful
+    - wrong password ==> do something
+    - Create a logout button
+    - Set members with a secret code
+
+Project Status
+    Server tokens working
+    data base connection working
+    data base manipulation working
+    user creation working
+    user login working
+    user logout not implemented
+
+There are features not in use to be deleted
 
 
-### Notas Personales, Español
+## Notas Personales, Español
 
 December 26, 2022
 - Passport.js local se utiliza en webs calsicas donde no se tiene un codigo para el front y otro para el back

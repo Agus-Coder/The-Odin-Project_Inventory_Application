@@ -21,7 +21,6 @@ const LogIn = () => {
 
     response = await fetch(`http://localhost:3000/login`, {
       method: "POST",
-
       mode: "cors",
       body: JSON.stringify(data),
       headers: {
@@ -30,19 +29,16 @@ const LogIn = () => {
     });
 
     obj = await response.json();
-    console.log(obj);
-    localStorage.setItem("userToken", obj.token);
 
-    console.log(response.status);
+    console.log(response.ok);
 
-    finalLogin()
-  }
-
-  function finalLogin() {
     if (response.ok) {
+      console.log("sucess");
+      localStorage.setItem("userToken", obj.token);
       navigate("/");
-    } else if(response.status == 403){
-      return
+    }
+    if (!response.ok) {
+      alert(obj.message);
     }
   }
 
