@@ -8,7 +8,7 @@ exports.user_creation_post = (req, res, next) => {
     result === null ? (userAlreadyExist = false) : (userAlreadyExist = true);
   });
 
-  if (userAlreadyExist) {
+  if (!userAlreadyExist) {
     const saltHash = genPassword(req.body.password);
 
     const salt = saltHash.salt;

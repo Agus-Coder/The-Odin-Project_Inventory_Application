@@ -35,6 +35,7 @@ const LogIn = () => {
     if (response.ok) {
       console.log("sucess");
       localStorage.setItem("userToken", obj.token);
+      localStorage.setItem("userID", obj._id);
       navigate("/");
     }
     if (!response.ok) {
