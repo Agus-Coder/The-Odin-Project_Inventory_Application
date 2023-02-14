@@ -20,7 +20,11 @@ router.get("/instrument/create", instrument_controller.instrument_create_get);
 router.post("/instrument/create", instrument_controller.instrument_create_post);
 
 // GET request for viewing a list of created instruments
-router.get("/instrument/list", instrument_controller.instrument_list);
+router.get(
+  "/instrument/list",
+  passport.authenticate("jwt", { session: false }),
+  instrument_controller.instrument_list
+);
 
 // GET any instrument detail
 router.get("/instrument/:id", instrument_controller.instrument_detail);
@@ -46,7 +50,11 @@ router.get("/artist/create", artist_controller.artist_create_get);
 router.post("/artist/create", artist_controller.artist_create_post);
 
 // GET request for viewing a list of created artists
-router.get("/artist/list", artist_controller.artist_list);
+router.get(
+  "/artist/list",
+  passport.authenticate("jwt", { session: false }),
+  artist_controller.artist_list
+);
 
 // GET any artist detail
 router.get("/artist/:id", artist_controller.artist_detail);
@@ -66,16 +74,28 @@ router.get("/genre/create", genre_controller.genre_create_get);
 router.post("/genre/create", genre_controller.genre_create_post);
 
 // GET request for viewing a list of created genres
-router.get("/genre/list", genre_controller.genre_list);
+router.get(
+  "/genre/list",
+  passport.authenticate("jwt", { session: false }),
+  genre_controller.genre_list
+);
 
 // GET any genre detail
 router.get("/genre/:id", genre_controller.genre_detail);
 
 // GET delete genre from the list
-router.get("/genre/:id/delete", genre_controller.genre_delete_get);
+router.get(
+  "/genre/:id/delete",
+  passport.authenticate("jwt", { session: false }),
+  genre_controller.genre_delete_get
+);
 
 // POST delete genre from the list
-router.delete("/genre/:id/delete", genre_controller.genre_delete_post);
+router.delete(
+  "/genre/:id/delete",
+  passport.authenticate("jwt", { session: false }),
+  genre_controller.genre_delete_post
+);
 
 // user Creation
 
@@ -97,7 +117,7 @@ router.post("/login", async (req, res, next) => {
       // test de error o de usuario no autentificado(pass or user incorrecto)
       if (err || !user) {
         console.log("incorrect user or password");
-        res.status(403).json({message: 'Wrong user or password'})
+        res.status(403).json({ message: "Wrong user or password" });
         const error = new Error("new Error");
         return next(error);
       }
@@ -106,11 +126,10 @@ router.post("/login", async (req, res, next) => {
         if (err) return next(err);
         console.log(user);
 
-        const body = { _id: user._id, username: user.username,  };
+        const body = { _id: user._id, username: user.username };
 
         const token = jwt.sign({ user: body }, "top_secret");
         res.json({ token, user });
-
       });
     } catch (e) {
       return next(e);
