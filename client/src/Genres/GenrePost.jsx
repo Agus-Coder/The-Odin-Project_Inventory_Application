@@ -37,6 +37,8 @@ const GenrePost = () => {
       },
     });
     console.log(data);
+
+    location.reload();
   }
 
   return (

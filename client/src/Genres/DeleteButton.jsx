@@ -10,6 +10,8 @@ const DeleteButton = ({ el }) => {
     console.log(el._id);
     console.log(el.dataClass);
     console.log("http://localhost:3000/"+ el.dataClass +"/" + el._id + "/delete");
+
+    location.reload();
   };
 
   return (
