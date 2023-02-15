@@ -5,6 +5,11 @@ import Navbar from "react-bootstrap/Navbar";
 import { Link } from "react-router-dom";
 import { onlineUser } from "../Context/Context";
 
+function logOut(){
+  localStorage.clear();
+  location.reload();
+}
+
 function NavBar() {
 
 const user = useContext(onlineUser)
@@ -22,6 +27,7 @@ console.log(user.username);
             <Nav.Link>Instruments</Nav.Link>
             <Nav.Link>Artists</Nav.Link>
             <Nav.Link>Genres</Nav.Link>
+            <Nav.Link><button onClick={()=>{logOut()}}>Log Out</button></Nav.Link>
             <p>{user.username}</p>
           </Nav>
         </Navbar.Collapse>

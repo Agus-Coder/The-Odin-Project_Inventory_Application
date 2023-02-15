@@ -41,7 +41,7 @@ const GenrePost = () => {
 
   return (
     <>
-      <div className="bg-info bg-opacity-50 GenrePost">
+      <div className=" GenrePost">
         <form onSubmit={handlePost}> 
         {/* With "onSubmit={() => handlePost()}" wont work*/}
           <div className="form-group">

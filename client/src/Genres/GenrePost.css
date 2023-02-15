@@ -2,5 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30vw;
+    width: 40vw;
+    background-color: rgb(17, 157, 192);
 }
